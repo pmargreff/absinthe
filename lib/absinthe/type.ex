@@ -277,6 +277,7 @@ defmodule Absinthe.Type do
   @doc "Unwrap a type from a List or NonNull"
   @spec unwrap(custom_t | wrapping_t | map) :: reference_t | map | nil
   def unwrap(%{of_type: t}), do: unwrap(t)
+  def unwrap(:undefined_default), do: nil
   def unwrap(type), do: type
 
   @doc "Unwrap a type from NonNull"

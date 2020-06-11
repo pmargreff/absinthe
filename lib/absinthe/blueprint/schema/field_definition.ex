@@ -13,7 +13,7 @@ defmodule Absinthe.Blueprint.Schema.FieldDefinition do
     deprecation: nil,
     config: nil,
     triggers: [],
-    default_value: nil,
+    default_value: :undefined_default,
     arguments: [],
     directives: [],
     complexity: nil,

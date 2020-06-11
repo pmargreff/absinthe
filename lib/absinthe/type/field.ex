@@ -210,7 +210,7 @@ defmodule Absinthe.Type.Field do
             triggers: [],
             middleware: [],
             complexity: nil,
-            default_value: nil,
+            default_value: :undefined_default,
             __private__: [],
             definition: nil,
             __reference__: nil

@@ -16,6 +16,10 @@ defmodule Absinthe.Phase.Document.Arguments.FillDefaults do
     {:ok, node}
   end
 
+  defp handle_node(%{schema_node: %{default_value: :undefined_default}} = node) do
+    node
+  end
+
   defp handle_node(
          %Blueprint.Input.Argument{schema_node: schema_node, input_value: %{normalized: nil}} =
            node
@@ -31,8 +35,7 @@ defmodule Absinthe.Phase.Document.Arguments.FillDefaults do
 
   defp handle_node(node), do: node
 
-  defp handle_defaults(%{input_value: input} = node, %{default_value: val})
-       when not is_nil(val) do
+  defp handle_defaults(%{input_value: input} = node, %{default_value: val}) do
     input = %{input | data: val, normalized: %Blueprint.Input.Generated{by: __MODULE__}}
     %{node | input_value: input}
   end

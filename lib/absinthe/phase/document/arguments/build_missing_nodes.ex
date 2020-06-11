@@ -73,11 +73,11 @@ defmodule Absinthe.Phase.Document.Arguments.BuildMissingNodes do
     |> Map.values()
     |> Enum.reduce(arguments, fn
       # If it's deprecated without a default, ignore it
-      %{deprecation: %{}, default_value: nil}, arguments ->
+      %{deprecation: %{}, default_value: :undefined_default}, arguments ->
         arguments
 
       # If it has a default value, we want build it.
-      %{default_value: val} = schema_node, arguments when not is_nil(val) ->
+      %{default_value: val} = schema_node, arguments when val != :undefined_default ->
         arg = build_empty_node(type, schema_node, source_location, adapter, schema)
         [arg | arguments]
 

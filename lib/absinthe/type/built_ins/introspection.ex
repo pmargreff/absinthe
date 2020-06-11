@@ -286,7 +286,7 @@ defmodule Absinthe.Type.BuiltIns.Introspection do
     field :default_value,
       type: :string,
       resolve: fn
-        _, %{source: %{default_value: nil}} ->
+        _, %{source: %{default_value: :undefined_default}} ->
           {:ok, nil}
 
         _, %{schema: schema, source: %{default_value: value, type: type}, adapter: adapter} ->
