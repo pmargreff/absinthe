@@ -151,15 +151,31 @@ defmodule Absinthe.Fixtures.ArgumentsSchema do
       arg :name, :input_name_raising
     end
 
-    field :company, :string do
+    field :order, :string do
       arg :name, :string, default_value: nil
+      arg :quantity, :integer, default_value: nil
+      arg :weight, :float, default_value: nil
+      arg :received, :boolean, default_value: nil
 
       resolve fn
-        %{name: name}, _ ->
-          {:ok, name}
+        %{name: nil, quantity: nil, weight: nil, received: nil}, _ ->
+          {:ok, "all simple values received!"}
 
         _args, _ ->
-          {:error, "could not find your default nil arg"}
+          {:error, "could not find your default nil arguments"}
+      end
+    end
+
+    field :order_contact, :string do
+      arg :accountables, list_of(:string), default_value: nil
+      arg :type, :contact_input, default_value: nil
+
+      resolve fn
+        %{accountables: nil, type: nil}, _ ->
+          {:ok, "all complex values received!"}
+
+        _args, _ ->
+          {:error, "could not find your default nil arguments"}
       end
     end
   end

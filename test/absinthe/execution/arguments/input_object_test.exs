@@ -205,14 +205,13 @@ defmodule Absinthe.Execution.Arguments.InputObjectTest do
   end
 
   @graphql """
-  query ($name: String) {
-    company(name: $name)
+  query ($name: String, $quantity: Int, $weight: Float, $received: Boolean) {
+    order(name: $name, quantity: $quantity, weight: $weight, received: $received)
   }
   """
-  @tag skip: true
-  test "return nil when default_value is nil for simple input" do
+  test "allow default_value as nil for simple types" do
     assert_data(
-      %{"company" => nil},
+      %{"order" => "all simple values received!"},
       run(
         @graphql,
         @schema,
@@ -221,7 +220,19 @@ defmodule Absinthe.Execution.Arguments.InputObjectTest do
     )
   end
 
-  # TODO: test nil as default for other types
-  # TODO: test nil as default for lists
-  # TODO: test nil as default for complex objects
+  @graphql """
+  query ($accountables: String, $type: ContactInput) {
+    order_contact(accountables: $accountables, type: $type)
+  }
+  """
+  test "allow default_value as nil for complex types" do
+    assert_data(
+      %{"order_contact" => "all complex values received!"},
+      run(
+        @graphql,
+        @schema,
+        variables: %{}
+      )
+    )
+  end
 end
